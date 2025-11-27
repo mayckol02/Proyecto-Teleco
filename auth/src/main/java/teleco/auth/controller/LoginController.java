@@ -1,15 +1,13 @@
-
 package teleco.auth.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import teleco.auth.config.JwtUtil;
-import teleco.auth.modelo.Usuario;
+import teleco.auth.dto.LoginRequest;
+import teleco.auth.dto.UsuarioDTO;
 import teleco.auth.service.LoginService;
-import teleco.auth.service.LoginRequest;
+
 import java.util.Map;
 
 @RestController
@@ -25,15 +23,31 @@ public class LoginController {
 
     @PostMapping("/")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        String correo = loginRequest.getCorreo();
-        String clave = loginRequest.getClave();
 
-        boolean valido = loginService.verificarLogin(correo, clave);
-        if (valido) {
-            String token = jwtUtil.generarToken(correo);
-            return ResponseEntity.ok(Map.of("mensaje", "Login exitoso", "token", token));
-        } else {
-            return ResponseEntity.status(401).body(Map.of("mensaje", "Credenciales inválidas"));
+        UsuarioDTO usuario = loginService.validarUsuario(
+                loginRequest.getCorreo(),
+                loginRequest.getClave()
+        );
+
+        if (usuario == null) {
+            return ResponseEntity.status(401)
+                    .body(Map.of("mensaje", "Credenciales inválidas"));
         }
+
+        String token = jwtUtil.generarToken(
+                usuario.getCorreo(),
+                usuario.getRol(),
+                usuario.getId()
+        );
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "mensaje", "Login exitoso",
+                        "token", token,
+                        "rol", usuario.getRol(),
+                        "id", usuario.getId(),
+                        "correo", usuario.getCorreo()
+                )
+        );
     }
 }

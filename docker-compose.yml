@@ -23,6 +23,7 @@ services:
       - "8082:8082"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - JWT_SECRET=S3cr3tJWTKeyDeberiaSerMasLarga123456
     depends_on:
       - postgres-db
     networks:
@@ -49,3 +50,5 @@ volumes:
 networks:
   micro_net:
     driver: bridge
+
+

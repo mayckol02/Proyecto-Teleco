@@ -1,36 +1,37 @@
 package teleco.auth.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import teleco.auth.modelo.Usuario;
 
-import java.util.Arrays;
-import java.util.Map;
+import teleco.auth.dto.UsuarioDTO;
 
 @Service
 public class LoginService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
-    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    @Autowired
+    private RestTemplate restTemplate;
 
-    public boolean verificarLogin(String correo, String clave) {
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    private final String USER_SERVICE_URL = "http://parcial-service:8081/usuario/correo/";
+
+    public UsuarioDTO validarUsuario(String correo, String clave) {
+
         try {
-            String url = "http://parcial-service:8081/usuario/";
-            Map[] usuarios = restTemplate.getForObject(url, Map[].class);
+            UsuarioDTO usuario = restTemplate.getForObject(
+                    USER_SERVICE_URL + correo, UsuarioDTO.class);
 
-            if (usuarios != null) {
-                for (Map usuario : usuarios) {
-                    if (correo.equals(usuario.get("correo"))) {
-                        String claveEncriptada = (String) usuario.get("clave");
-                        return passwordEncoder.matches(clave, claveEncriptada);
-                    }
-                }
-            }
+            if (usuario == null) return null;
+
+            boolean passwordOk = passwordEncoder.matches(clave, usuario.getClave());
+
+            return passwordOk ? usuario : null;
+
         } catch (Exception e) {
-            System.out.println("Error conectando al microservicio de usuarios: " + e.getMessage());
+            return null;
         }
-        return false;
     }
 }
