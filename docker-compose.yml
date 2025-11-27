@@ -1,0 +1,51 @@
+version: '3.9'
+
+services:
+  postgres-db:
+    image: postgres:15
+    container_name: postgres-usuarios
+    restart: always
+    environment:
+      POSTGRES_DB: usuario
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - micro_net
+
+  auth-service:
+    build: ./auth
+    container_name: auth-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - postgres-db
+    networks:
+      - micro_net
+
+  parcial-service:
+    build: ./parcial
+    container_name: parcial-service
+    ports:
+      - "8081:8081"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/usuario
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - auth-service
+    networks:
+      - micro_net
+
+volumes:
+  postgres_data:
+
+networks:
+  micro_net:
+    driver: bridge
