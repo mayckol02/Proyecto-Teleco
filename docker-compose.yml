@@ -44,6 +44,56 @@ services:
     networks:
       - micro_net
 
+  maintenance-service:
+    build: ./MaintenanceService
+    container_name: maintenance-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+    networks:
+      - micro_net
+
+  property-service:
+    build: ./property
+    container_name: property-service
+    ports:
+      - "8084:8084"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/condominios
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=root
+    depends_on:
+      - auth-service
+      - parcial-service
+    networks:
+      - micro_net
+      
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+      - mailhog
+    networks:
+      - micro_net
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "8025:8025" # web UI
+      - "1025:1025" # smtp
+    networks:
+      - micro_net
+      
 volumes:
   postgres_data:
 
