@@ -1,4 +1,4 @@
-package com.proyectoTeleco.MaintenanceService.maintenance.dto;
+package com.proyectoTeleco.maintenance.dto;
 
 public class AssignTechnicianDTO {
     private String technicianId;

@@ -1,4 +1,4 @@
-package com.proyectoTeleco.MaintenanceService.maintenance;
+package com.proyectoTeleco.maintenance;
 
 public enum MaintenanceStatus {
     PENDIENTE,

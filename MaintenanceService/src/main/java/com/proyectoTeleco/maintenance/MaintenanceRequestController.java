@@ -1,6 +1,6 @@
-package com.proyectoTeleco.MaintenanceService.maintenance;
+package com.proyectoTeleco.maintenance;
 
-import com.proyectoTeleco.MaintenanceService.maintenance.dto.*;
+import com.proyectoTeleco.maintenance.dto.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,6 @@
-package com.proyectoTeleco.MaintenanceService.maintenance.dto;
+package com.proyectoTeleco.maintenance.dto;
 
-import com.proyectoTeleco.MaintenanceService.maintenance.MaintenanceType;
+import com.proyectoTeleco.maintenance.MaintenanceType;
 
 public class CreateMaintenanceRequestDTO {
     private String title;

@@ -1,4 +1,4 @@
-package com.proyectoTeleco.MaintenanceService.config;
+package com.proyectoTeleco.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

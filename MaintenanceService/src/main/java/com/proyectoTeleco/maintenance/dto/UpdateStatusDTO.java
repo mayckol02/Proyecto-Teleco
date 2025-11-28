@@ -1,6 +1,6 @@
-package com.proyectoTeleco.MaintenanceService.maintenance.dto;
+package com.proyectoTeleco.maintenance.dto;
 
-import com.proyectoTeleco.MaintenanceService.maintenance.MaintenanceStatus;
+import com.proyectoTeleco.maintenance.MaintenanceStatus;
 
 public class UpdateStatusDTO {
     private MaintenanceStatus status;

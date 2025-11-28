@@ -1,7 +1,7 @@
-package com.proyectoTeleco.MaintenanceService.maintenance;
+package com.proyectoTeleco.maintenance;
 
-import com.proyectoTeleco.MaintenanceService.maintenance.dto.CreateMaintenanceRequestDTO;
-import com.proyectoTeleco.MaintenanceService.maintenance.dto.MaintenanceRequestResponseDTO;
+import com.proyectoTeleco.maintenance.dto.CreateMaintenanceRequestDTO;
+import com.proyectoTeleco.maintenance.dto.MaintenanceRequestResponseDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

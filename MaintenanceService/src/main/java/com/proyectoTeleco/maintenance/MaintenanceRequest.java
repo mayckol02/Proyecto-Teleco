@@ -1,4 +1,4 @@
-package com.proyectoTeleco.MaintenanceService.maintenance;
+package com.proyectoTeleco.maintenance;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;

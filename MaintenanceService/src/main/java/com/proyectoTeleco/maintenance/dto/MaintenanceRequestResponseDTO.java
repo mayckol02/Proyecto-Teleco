@@ -1,7 +1,7 @@
-package com.proyectoTeleco.MaintenanceService.maintenance.dto;
+package com.proyectoTeleco.maintenance.dto;
 
-import com.proyectoTeleco.MaintenanceService.maintenance.MaintenanceStatus;
-import com.proyectoTeleco.MaintenanceService.maintenance.MaintenanceType;
+import com.proyectoTeleco.maintenance.MaintenanceStatus;
+import com.proyectoTeleco.maintenance.MaintenanceType;
 
 import java.time.LocalDateTime;
 import java.util.List;

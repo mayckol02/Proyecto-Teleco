@@ -1,4 +1,4 @@
-package com.proyectoTeleco.MaintenanceService.maintenance;
+package com.proyectoTeleco.maintenance;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
