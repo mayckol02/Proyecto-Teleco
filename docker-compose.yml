@@ -53,6 +53,7 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
       - auth-service
+      - notification-service
     networks:
       - micro_net
 
@@ -80,7 +81,6 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     depends_on:
-      - auth-service
       - mailhog
     networks:
       - micro_net

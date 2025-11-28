@@ -15,6 +15,9 @@ public class MaintenanceRequestResponseDTO {
     private String photoUrl;
     private MaintenanceStatus status;
     private String assignedTechnicianId;
+    private String residentId;
+    private String residentEmail;
+    private String residentName;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime completedAt;
@@ -52,6 +55,12 @@ public class MaintenanceRequestResponseDTO {
     public void setStatus(MaintenanceStatus status) { this.status = status; }
     public String getAssignedTechnicianId() { return assignedTechnicianId; }
     public void setAssignedTechnicianId(String assignedTechnicianId) { this.assignedTechnicianId = assignedTechnicianId; }
+    public String getResidentId() { return residentId; }
+    public void setResidentId(String residentId) { this.residentId = residentId; }
+    public String getResidentEmail() { return residentEmail; }
+    public void setResidentEmail(String residentEmail) { this.residentEmail = residentEmail; }
+    public String getResidentName() { return residentName; }
+    public void setResidentName(String residentName) { this.residentName = residentName; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.model.MaintenanceNotificationRequest;
 import com.example.model.NotificationRequest;
 import com.example.service.NotificationService;
 
@@ -26,5 +27,14 @@ public class NotificationController {
             return ResponseEntity.ok("Notification queued/sent");
         }
         return ResponseEntity.status(500).body("Failed to send notification");
+    }
+
+    @PostMapping("/maintenance")
+    public ResponseEntity<?> notifyMaintenance(@RequestBody MaintenanceNotificationRequest req) {
+        boolean result = service.sendMaintenanceNotification(req);
+        if (result) {
+            return ResponseEntity.ok("Maintenance notification sent");
+        }
+        return ResponseEntity.status(500).body("Failed to send maintenance notification");
     }
 }

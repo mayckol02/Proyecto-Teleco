@@ -21,6 +21,9 @@ public class MaintenanceRequest {
     @Enumerated(EnumType.STRING)
     private MaintenanceStatus status = MaintenanceStatus.PENDIENTE;
     private String assignedTechnicianId;
+    private String residentId; // ID del residente que solicitó
+    private String residentEmail; // Email del residente para notificaciones
+    private String residentName; // Nombre del residente para personalizarNotificación
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
     private LocalDateTime completedAt;
@@ -54,6 +57,12 @@ public class MaintenanceRequest {
     public void setStatus(MaintenanceStatus status) { this.status = status; }
     public String getAssignedTechnicianId() { return assignedTechnicianId; }
     public void setAssignedTechnicianId(String assignedTechnicianId) { this.assignedTechnicianId = assignedTechnicianId; }
+    public String getResidentId() { return residentId; }
+    public void setResidentId(String residentId) { this.residentId = residentId; }
+    public String getResidentEmail() { return residentEmail; }
+    public void setResidentEmail(String residentEmail) { this.residentEmail = residentEmail; }
+    public String getResidentName() { return residentName; }
+    public void setResidentName(String residentName) { this.residentName = residentName; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public LocalDateTime getCompletedAt() { return completedAt; }

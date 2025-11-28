@@ -8,6 +8,8 @@ public class CreateMaintenanceRequestDTO {
     private String propertyId;
     private MaintenanceType type;
     private String photoUrl;
+    private String residentEmail;
+    private String residentName;
 
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
@@ -19,4 +21,8 @@ public class CreateMaintenanceRequestDTO {
     public void setType(MaintenanceType type) { this.type = type; }
     public String getPhotoUrl() { return photoUrl; }
     public void setPhotoUrl(String photoUrl) { this.photoUrl = photoUrl; }
+    public String getResidentEmail() { return residentEmail; }
+    public void setResidentEmail(String residentEmail) { this.residentEmail = residentEmail; }
+    public String getResidentName() { return residentName; }
+    public void setResidentName(String residentName) { this.residentName = residentName; }
 }

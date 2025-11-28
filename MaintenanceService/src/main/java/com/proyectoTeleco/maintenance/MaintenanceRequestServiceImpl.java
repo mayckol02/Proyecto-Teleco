@@ -2,6 +2,8 @@ package com.proyectoTeleco.maintenance;
 
 import com.proyectoTeleco.maintenance.dto.CreateMaintenanceRequestDTO;
 import com.proyectoTeleco.maintenance.dto.MaintenanceRequestResponseDTO;
+import com.proyectoTeleco.maintenance.dto.MaintenanceNotificationDTO;
+import com.proyectoTeleco.maintenance.client.NotificationClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,10 +18,14 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
 
     private final MaintenanceRequestRepository requestRepository;
     private final MaintenanceStatusHistoryRepository historyRepository;
+    private final NotificationClient notificationClient;
 
-    public MaintenanceRequestServiceImpl(MaintenanceRequestRepository requestRepository, MaintenanceStatusHistoryRepository historyRepository) {
+    public MaintenanceRequestServiceImpl(MaintenanceRequestRepository requestRepository, 
+                                        MaintenanceStatusHistoryRepository historyRepository,
+                                        NotificationClient notificationClient) {
         this.requestRepository = requestRepository;
         this.historyRepository = historyRepository;
+        this.notificationClient = notificationClient;
     }
 
     @Override
@@ -31,6 +37,9 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         request.setType(dto.getType());
         request.setPhotoUrl(dto.getPhotoUrl());
         request.setStatus(MaintenanceStatus.PENDIENTE);
+        request.setResidentId(residentId);
+        request.setResidentEmail(dto.getResidentEmail());
+        request.setResidentName(dto.getResidentName());
         requestRepository.save(request);
         request.addHistory(new MaintenanceStatusHistory(null, MaintenanceStatus.PENDIENTE, residentId));
         return toDTO(requestRepository.save(request));
@@ -68,6 +77,20 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
             if (newStatus == MaintenanceStatus.COMPLETADO) {
                 request.setCompletedAt(LocalDateTime.now());
             }
+            
+            // Enviar notificación de cambio de estado (solo si tiene email del residente)
+            if (request.getResidentEmail() != null && !request.getResidentEmail().isEmpty()) {
+                MaintenanceNotificationDTO notifDTO = new MaintenanceNotificationDTO(
+                        request.getId(),
+                        request.getResidentEmail(),
+                        request.getResidentName(),
+                        current.toString(),
+                        newStatus.toString(),
+                        LocalDateTime.now(),
+                        request.getPropertyId()
+                );
+                notificationClient.sendMaintenanceNotification(notifDTO);
+            }
         }
         return toDTO(requestRepository.save(request));
     }
@@ -101,6 +124,9 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         dto.setPhotoUrl(request.getPhotoUrl());
         dto.setStatus(request.getStatus());
         dto.setAssignedTechnicianId(request.getAssignedTechnicianId());
+        dto.setResidentId(request.getResidentId());
+        dto.setResidentEmail(request.getResidentEmail());
+        dto.setResidentName(request.getResidentName());
         dto.setCreatedAt(request.getCreatedAt());
         dto.setUpdatedAt(request.getUpdatedAt());
         dto.setCompletedAt(request.getCompletedAt());
