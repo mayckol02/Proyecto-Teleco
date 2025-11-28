@@ -71,6 +71,29 @@ services:
       - parcial-service
     networks:
       - micro_net
+      
+  notification-service:
+    build: ./notification-service
+    container_name: notification-service
+    ports:
+      - "8090:8090"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+      - mailhog
+    networks:
+      - micro_net
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "8025:8025" # web UI
+      - "1025:1025" # smtp
+    networks:
+      - micro_net
+      
 volumes:
   postgres_data:
 
