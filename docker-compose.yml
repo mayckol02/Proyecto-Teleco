@@ -44,6 +44,18 @@ services:
     networks:
       - micro_net
 
+  maintenance-service:
+    build: ./MaintenanceService
+    container_name: maintenance-service
+    ports:
+      - "8083:8083"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - auth-service
+    networks:
+      - micro_net
+
 volumes:
   postgres_data:
 
