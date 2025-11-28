@@ -13,6 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
     networks:
       - micro_net
 
@@ -66,6 +67,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/condominios
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=root
+      - JWT_SECRET=S3cr3tJWTKeyDeberiaSerMasLarga123456
     depends_on:
       - auth-service
       - parcial-service

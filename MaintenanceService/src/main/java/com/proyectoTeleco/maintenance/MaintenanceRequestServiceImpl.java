@@ -1,14 +1,15 @@
 package com.proyectoTeleco.maintenance;
 
-import com.proyectoTeleco.maintenance.dto.CreateMaintenanceRequestDTO;
-import com.proyectoTeleco.maintenance.dto.MaintenanceRequestResponseDTO;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.proyectoTeleco.maintenance.dto.CreateMaintenanceRequestDTO;
+import com.proyectoTeleco.maintenance.dto.MaintenanceRequestResponseDTO;
 
 @Service
 @Transactional
@@ -16,10 +17,14 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
 
     private final MaintenanceRequestRepository requestRepository;
     private final MaintenanceStatusHistoryRepository historyRepository;
+    private final NotificationClient notificationClient;
 
-    public MaintenanceRequestServiceImpl(MaintenanceRequestRepository requestRepository, MaintenanceStatusHistoryRepository historyRepository) {
+    public MaintenanceRequestServiceImpl(MaintenanceRequestRepository requestRepository, 
+                                        MaintenanceStatusHistoryRepository historyRepository,
+                                        NotificationClient notificationClient) {
         this.requestRepository = requestRepository;
         this.historyRepository = historyRepository;
+        this.notificationClient = notificationClient;
     }
 
     @Override
@@ -33,7 +38,12 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         request.setStatus(MaintenanceStatus.PENDIENTE);
         requestRepository.save(request);
         request.addHistory(new MaintenanceStatusHistory(null, MaintenanceStatus.PENDIENTE, residentId));
-        return toDTO(requestRepository.save(request));
+        MaintenanceRequest saved = requestRepository.save(request);
+        
+        // Enviar notificación al administrador
+        notificationClient.notifyMaintenanceCreated(dto.getPropertyId(), dto.getTitle());
+        
+        return toDTO(saved);
     }
 
     @Override
@@ -44,7 +54,16 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
         }
         request.setAssignedTechnicianId(technicianId);
         changeStatus(request, MaintenanceStatus.EN_PROGRESO, adminId);
-        return toDTO(requestRepository.save(request));
+        MaintenanceRequest saved = requestRepository.save(request);
+        
+        // Enviar notificación al técnico asignado
+        notificationClient.notifyTechnicianAssigned(
+            technicianId + "@ejemplo.com", 
+            request.getTitle(), 
+            request.getPropertyId()
+        );
+        
+        return toDTO(saved);
     }
 
     @Override
@@ -67,6 +86,19 @@ public class MaintenanceRequestServiceImpl implements MaintenanceRequestService 
             changeStatus(request, newStatus, userId);
             if (newStatus == MaintenanceStatus.COMPLETADO) {
                 request.setCompletedAt(LocalDateTime.now());
+                // Notificar al residente que se completó
+                notificationClient.notifyMaintenanceCompleted(
+                    "residente@ejemplo.com",
+                    request.getTitle()
+                );
+            } else {
+                // Notificar cambio de estado
+                notificationClient.notifyStatusChanged(
+                    "residente@ejemplo.com",
+                    request.getTitle(),
+                    current.toString(),
+                    newStatus.toString()
+                );
             }
         }
         return toDTO(requestRepository.save(request));
