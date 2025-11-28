@@ -77,15 +77,15 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
       maxWidth: '500px', 
       margin: '20px auto', 
       padding: '20px', 
-      border: '1px solid #ddd', 
+      border: '1px solid #444', 
       borderRadius: '8px',
-      backgroundColor: '#f9f9f9'
+      backgroundColor: '#2a2a2a'
     }}>
-      <h3>{usuario?.id ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
+      <h3 style={{ color: '#fff' }}>{usuario?.id ? 'Editar Usuario' : 'Nuevo Usuario'}</h3>
       
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <div>
-          <label htmlFor="nombre" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <label htmlFor="nombre" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#fff' }}>
             Nombre:
           </label>
           <input
@@ -95,13 +95,13 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
             value={formData.nombre}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#fff', color: '#000' }}
             placeholder="Nombre completo"
           />
         </div>
 
         <div>
-          <label htmlFor="correo" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <label htmlFor="correo" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#fff' }}>
             Correo:
           </label>
           <input
@@ -111,14 +111,14 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
             value={formData.correo}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#fff', color: '#000' }}
             placeholder="usuario@ejemplo.com"
           />
         </div>
 
         <div>
-          <label htmlFor="clave" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            Contraseña: {usuario?.id && <small>(dejar vacío para no cambiar)</small>}
+          <label htmlFor="clave" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#fff' }}>
+            Contraseña: {usuario?.id && <small style={{ color: '#bbb' }}>(dejar vacío para no cambiar)</small>}
           </label>
           <input
             type="password"
@@ -127,13 +127,13 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
             value={formData.clave}
             onChange={handleChange}
             required={!usuario?.id}
-            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#fff', color: '#000' }}
             placeholder="********"
           />
         </div>
 
         <div>
-          <label htmlFor="rol" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
+          <label htmlFor="rol" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#fff' }}>
             Rol:
           </label>
           <select
@@ -142,7 +142,7 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
             value={formData.rol}
             onChange={handleChange}
             required
-            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#fff', color: '#000' }}
           >
             <option value="ADMIN">ADMIN</option>
             <option value="TECNICO">TECNICO</option>
@@ -151,8 +151,8 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
         </div>
 
         <div>
-          <label htmlFor="propiedadId" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold' }}>
-            ID Propiedad: <small>(opcional)</small>
+          <label htmlFor="propiedadId" style={{ display: 'block', marginBottom: '5px', fontWeight: 'bold', color: '#fff' }}>
+            ID Propiedad: <small style={{ color: '#bbb' }}>(opcional)</small>
           </label>
           <input
             type="number"
@@ -160,7 +160,7 @@ export const UserForm = ({ usuario, onSuccess, onCancel }: UserFormProps) => {
             name="propiedadId"
             value={formData.propiedadId || ''}
             onChange={handleChange}
-            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #ccc' }}
+            style={{ width: '100%', padding: '8px', fontSize: '14px', borderRadius: '4px', border: '1px solid #555', backgroundColor: '#fff', color: '#000' }}
             placeholder="ID de la propiedad"
           />
         </div>

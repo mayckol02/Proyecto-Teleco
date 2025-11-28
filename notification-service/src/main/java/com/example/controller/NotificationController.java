@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import com.example.service.NotificationService;
 
 @RestController
 @RequestMapping("/notify")
+@CrossOrigin(origins = "*")
 public class NotificationController {
 
     private final NotificationService service;
