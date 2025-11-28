@@ -1,10 +1,10 @@
-package com.proyectoTeleco.PropertyService;
+package com.proyectoTeleco;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PropertyServiceApplicationTests {
+class MaintenanceServiceApplicationTests {
 
 	@Test
 	void contextLoads() {

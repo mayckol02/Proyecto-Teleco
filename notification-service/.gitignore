@@ -1,0 +1,47 @@
+# Ignore Maven build output
+/target/
+
+# Maven specific backup files
+/pom.xml.tag
+/pom.xml.releaseBackup
+/pom.xml.versionsBackup
+/pom.xml.next
+release.properties
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Logs
+*.log
+
+# IDEs and editors
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+out/
+
+# VS Code
+.vscode/
+
+# Generated sources
+/generated-sources/
+/generated-test-sources/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+*.env
+
+# Docker
+# Ignore locally built images or intermediate build artifacts (if any)
+docker-compose.override.yml
